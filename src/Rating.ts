@@ -146,7 +146,7 @@ module SW {
         private initEvents() {
             var self = this;
             var starClick = function() {
-                self.trigger('vote', parseInt((<HTMLElement>this).dataset['value']));
+                self.trigger('vote', parseInt((<HTMLElement>this).dataset['value']) + 1);
             };
 
             var leaveTimeout = 0;

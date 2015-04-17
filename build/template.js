@@ -1,5 +1,31 @@
 this["JST"] = this["JST"] || {};
 
+this["JST"]["rating.png.html.hbs"] = Handlebars.template({"1":function(depth0,helpers,partials,data,blockParams,depths) {
+    var stack1;
+
+  return "        <div data-value=\""
+    + this.escapeExpression(this.lambda(depth0, depth0))
+    + "\" class=\"w-star w-star_type-png w-rating__star "
+    + ((stack1 = helpers['if'].call(depth0,(depths[1] != null ? depths[1].isLocked : depths[1]),{"name":"if","hash":{},"fn":this.program(2, data, 0, blockParams, depths),"inverse":this.noop,"data":data})) != null ? stack1 : "")
+    + "\" "
+    + ((stack1 = helpers['if'].call(depth0,(depths[1] != null ? depths[1].stretch : depths[1]),{"name":"if","hash":{},"fn":this.program(4, data, 0, blockParams, depths),"inverse":this.program(6, data, 0, blockParams, depths),"data":data})) != null ? stack1 : "")
+    + ">\n            <div class=\"w-star__clip-rect\"></div>\n        </div>\n";
+},"2":function(depth0,helpers,partials,data) {
+    return "w-star_locked";
+},"4":function(depth0,helpers,partials,data) {
+    return "";
+},"6":function(depth0,helpers,partials,data,blockParams,depths) {
+    return "style=\"width: "
+    + this.escapeExpression(this.lambda((depths[2] != null ? depths[2].starSize : depths[2]), depth0))
+    + "px\"";
+},"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data,blockParams,depths) {
+    var stack1;
+
+  return "<div class=\"w-rating__stars\">\n"
+    + ((stack1 = (helpers.times || (depth0 && depth0.times) || helpers.helperMissing).call(depth0,(depth0 != null ? depth0.pointNumber : depth0),{"name":"times","hash":{},"fn":this.program(1, data, 0, blockParams, depths),"inverse":this.noop,"data":data})) != null ? stack1 : "")
+    + "</div>\n\n<div class=\"w-rating__result\">\n    <div class=\"w-rating__mark\"></div>\n    <div class=\"w-rating__vote-count\"></div>\n</div>";
+},"useData":true,"useDepths":true});
+
 this["JST"]["rating.svg.html.hbs"] = Handlebars.template({"1":function(depth0,helpers,partials,data,blockParams,depths) {
     var stack1, alias1=this.lambda, alias2=this.escapeExpression;
 

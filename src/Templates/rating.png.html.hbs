@@ -1,0 +1,12 @@
+<div class="w-rating__stars">
+    {{#times pointNumber}}
+        <div data-value="{{this}}" class="w-star w-star_type-png w-rating__star {{#if ../isLocked}}w-star_locked{{/if}}" {{#if ../stretch}}{{else}}style="width: {{../../starSize}}px"{{/if}}>
+            <div class="w-star__clip-rect"></div>
+        </div>
+    {{/times}}
+</div>
+
+<div class="w-rating__result">
+    <div class="w-rating__mark"></div>
+    <div class="w-rating__vote-count"></div>
+</div>

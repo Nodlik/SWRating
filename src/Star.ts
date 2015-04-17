@@ -50,8 +50,13 @@ module SW {
         }
 
         private moveClip(value: number) {
-            this.clip.style['-webkit-transform'] = 'scaleX(' + value + ')';
-            this.clip.style['transform'] = 'scaleX(' + value + ')';
+            if (this.clip.tagName != 'rect') { // if png
+                this.clip.style['width'] = value + '%';
+            }
+            else { // svg
+                this.clip.style['-webkit-transform'] = 'scaleX(' + value + ')';
+                this.clip.style['transform'] = 'scaleX(' + value + ')';
+            }
         }
     }
 }

@@ -103,8 +103,13 @@ var SW;
             this.el.removeEventListener('mouseleave', this.mouseLeave);
         };
         Star.prototype.moveClip = function (value) {
-            this.clip.style['-webkit-transform'] = 'scaleX(' + value + ')';
-            this.clip.style['transform'] = 'scaleX(' + value + ')';
+            if (this.clip.tagName != 'rect') {
+                this.clip.style['width'] = value + '%';
+            }
+            else {
+                this.clip.style['-webkit-transform'] = 'scaleX(' + value + ')';
+                this.clip.style['transform'] = 'scaleX(' + value + ')';
+            }
         };
         return Star;
     })();
@@ -227,7 +232,7 @@ var SW;
             var _this = this;
             var self = this;
             var starClick = function () {
-                self.trigger('vote', parseInt(this.dataset['value']));
+                self.trigger('vote', parseInt(this.dataset['value']) + 1);
             };
             var leaveTimeout = 0;
             var mouseEnter = function (e) {

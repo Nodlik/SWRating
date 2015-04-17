@@ -14,3 +14,31 @@
     width: 100%;
   }
 }
+
+.w-star_type-png {
+  overflow: hidden;
+  position: relative;
+  background: url(@pathToImage) no-repeat right top;
+  background-size: cover;
+
+  margin: 0 1px;
+  width: 100%;
+
+  .w-star__clip-rect {
+    padding-top: 100%;
+    overflow: hidden;
+    position: relative;
+
+    &:before {
+      content: "";
+      position: absolute;
+      display: block;
+      width: 100%;
+      height: 100%;
+      background: url(@pathToImage) no-repeat left top;
+      background-size: cover;
+      left: 0;
+      top: 0;
+    }
+  }
+}

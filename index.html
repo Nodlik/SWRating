@@ -1,95 +1,246 @@
-<!doctype html>
-<html>
-  <head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>SW Rating by Nodlik</title>
+    <!--[if IE]>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <div class="wrapper">
-      <header>
-        <h1>SW Rating</h1>
-        <p>Simple rating widget</p>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-        <p class="view"><a href="https://github.com/Nodlik/SWRating">View the Project on GitHub <small>Nodlik/SWRating</small></a></p>
+    <title>Simple rating widget - Demo & Docs</title>
 
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/build/css/rating-default.css">
 
-        <ul>
-          <li><a href="https://github.com/Nodlik/SWRating/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/Nodlik/SWRating/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/Nodlik/SWRating">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <h1>
-<a id="simple-rating-widget" class="anchor" href="#simple-rating-widget" aria-hidden="true"><span class="octicon octicon-link"></span></a>Simple Rating Widget</h1>
+    <script src="/build/rating.standalone.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
-<h3>
-<a id="Подключение" class="anchor" href="#%D0%9F%D0%BE%D0%B4%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%BD%D0%B8%D0%B5" aria-hidden="true"><span class="octicon octicon-link"></span></a>Подключение</h3>
+</head>
+<body>
 
-<p>Виджет использует шаблонизатор handlebars.js, если он уже есть в проекте, достаточно подключить rating.min.js. В противном случае, можно либо подключить handlebars отдельно, либо использовать rating.standalone.js</p>
-
-<p>Так же нужно подключить css файл rating-default.css</p>
-
-<h3>
-<a id="Использование" class="anchor" href="#%D0%98%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5" aria-hidden="true"><span class="octicon octicon-link"></span></a>Использование</h3>
-
-<div class="highlight highlight-js"><pre><span class="pl-k">var</span> w <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">SW.Rating</span>(<span class="pl-c1">document</span>.<span class="pl-c1">getElementById</span>(<span class="pl-s"><span class="pl-pds">'</span>rating<span class="pl-pds">'</span></span>));
-
-w.on(<span class="pl-s"><span class="pl-pds">'</span>vote<span class="pl-pds">'</span></span>, <span class="pl-k">function</span>(<span class="pl-smi">e</span>) {
-    <span class="pl-c1">alert</span>(<span class="pl-s"><span class="pl-pds">'</span>User voted: <span class="pl-pds">'</span></span> <span class="pl-k">+</span> e.<span class="pl-c1">data</span>);
-});
-
-w.render();</pre></div>
-
-<h3>
-<a id="Конфигурация" class="anchor" href="#%D0%9A%D0%BE%D0%BD%D1%84%D0%B8%D0%B3%D1%83%D1%80%D0%B0%D1%86%D0%B8%D1%8F" aria-hidden="true"><span class="octicon octicon-link"></span></a>Конфигурация</h3>
-
-<p>Виджет можно настроить:</p>
-
-<div class="highlight highlight-js"><pre>w.setConfig({
-    pointNumber<span class="pl-k">:</span> <span class="pl-c1">5</span>, <span class="pl-c">// Сколько баллов в шкале</span>
-    starType<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>svg<span class="pl-pds">'</span></span>, <span class="pl-c">// Формат картинок в виджете (svg или png)</span>
-    starSize<span class="pl-k">:</span> <span class="pl-c1">20</span>, <span class="pl-c">// Размер одной звезды в пикселях по умолчанию</span>
-    stretch<span class="pl-k">:</span> <span class="pl-c1">false</span> <span class="pl-c">// Растягивать ли виджет по всей ширине блока</span>
-    isLocked<span class="pl-k">:</span> <span class="pl-c1">false</span>
-});
-
-w.render();</pre></div>
-
-<h3>
-<a id="api" class="anchor" href="#api" aria-hidden="true"><span class="octicon octicon-link"></span></a>API</h3>
-
-<div class="highlight highlight-js"><pre>w.setConfig(config); <span class="pl-c">// Кофигурация виджета</span>
-
-w.setMark(mark); <span class="pl-c">// Задать рейтинг</span>
-w.getMark()<span class="pl-k">:</span> <span class="pl-c">// Получить текущий рейтинг</span>
-
-w.setVoteCount(voteCount); <span class="pl-c">// Задать количество проголосовавших</span>
-w.getVoteCount();
-
-w.lock(); <span class="pl-c">// Заблокировать виджет</span>
-w.unlock();
-
-w.<span class="pl-c1">clear</span>(); <span class="pl-c">// Очистить виджет</span>
-
-w.update(); <span class="pl-c">// Обновить рейтинг</span>
-w.render();
-</pre></div>
-      </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/Nodlik">Nodlik</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
+<div class="container">
+    <div class="row well" style="margin-top: 20px">
+        <div class="col-md-2"><a href="https://github.com/Nodlik/SWRating">Project on GitHub</a></div>
+        <div class="col-md-2"><a href="https://github.com/Nodlik/SWRating/zipball/master">Download <strong>ZIP File</strong></a></div>
+        <div class="col-md-2"><a href="https://github.com/Nodlik/SWRating/tarball/master">Download <strong>TAR Ball</strong></a></div>
     </div>
-    <script src="javascripts/scale.fix.js"></script>
-    
-  </body>
+
+    <div class="page-header">
+        <h1>Simple rating widget</h1>
+    </div>
+
+    <div class="page-header">
+        <h3>Использование:</h3>
+    </div>
+    <div class="well row">
+<pre>
+    var w = new SW.Rating(document.getElementById('rating'));
+
+    w.on('vote', function(e) {
+        alert(e.data); // Оценка которую выбрал пользователь
+    });
+
+    w.render();
+</pre>
+    </div>
+
+    <div class="page-header">
+        <h3>Демо 1:</h3>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            var total = 9;
+            var people = 2;
+
+            var w = new SW.Rating(document.getElementById('demo1'), 3.5, people);
+
+            w.on('vote', function(e) {
+                total += e.data;
+                people++;
+
+                w.setMark(total / people);
+                w.setVoteCount(people);
+
+                w.update();
+            });
+
+            w.render();
+        });
+    </script>
+
+    <div class="well row">
+        <div id="demo1" class="col-md-2"></div>
+        <div class="col-md-5"></div>
+        <div class="col-md-5">
+<pre>
+var total = 9;
+var people = 2;
+
+var w = new SW.Rating(document.getElementById('demo1'), 3.5, people);
+
+w.on('vote', function(e) {
+    total += e.data;
+    people++;
+
+    w.setMark(total / people);
+    w.setVoteCount(people);
+
+    w.update();
+});
+
+w.render();
+        </pre>
+        </div>
+    </div>
+
+
+    <div class="page-header">
+        <h3>Демо 2:</h3>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            var total = 11;
+            var people = 2;
+
+            var w = new SW.Rating(document.getElementById('demo2'), 5.5, people);
+            w.setConfig({
+                pointNumber: 10,
+                stretch: true
+            });
+
+            w.on('vote', function(e) {
+                total += e.data;
+                people++;
+
+                w.setMark(total / people);
+                w.setVoteCount(people);
+
+                w.update();
+            });
+
+            w.render();
+        });
+    </script>
+
+    <div class="well row">
+        <div id="demo2" class="col-md-7"></div>
+        <div class="col-md-5">
+<pre>
+w.setConfig({
+    pointNumber: 10,
+    stretch: true
+});
+
+w.render();
+</pre>
+        </div>
+    </div>
+
+    <div class="page-header">
+        <h3>Демо 3: (png)</h3>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            var total = 11;
+            var people = 2;
+
+            var w = new SW.Rating(document.getElementById('demo3'), 5.5, people);
+            w.setConfig({
+                pointNumber: 10,
+                starType: 'png'
+            });
+
+            w.on('vote', function(e) {
+                total += e.data;
+                people++;
+
+                w.setMark(total / people);
+                w.setVoteCount(people);
+
+                w.update();
+            });
+
+            w.render();
+        });
+    </script>
+
+    <div class="well row">
+        <div id="demo3" class="col-md-3"></div>
+        <div class="col-md-4"></div>
+        <div class="col-md-5">
+<pre>
+w.setConfig({
+        pointNumber: 10,
+        starType: 'png'
+});
+
+w.render();
+</pre>
+        </div>
+    </div>
+
+
+
+    <div class="page-header">
+        <h3>Демо 4: (блокирование)</h3>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            var total = 9;
+            var people = 2;
+
+            var w = new SW.Rating(document.getElementById('demo4'), 3.5, people);
+            w.setConfig({
+                pointNumber: 10,
+                starType: 'png'
+            });
+
+            w.on('vote', function(e) {
+                total += e.data;
+                people++;
+
+                w.lock();
+                w.update();
+
+                setTimeout(function() {
+                    w.setMark(total / people);
+                    w.setVoteCount(people);
+                    w.unlock();
+
+                    w.update();
+                }, 1000);
+            });
+
+            w.render();
+        });
+    </script>
+
+    <div class="well row">
+        <div class="col-md-7">
+            <p>В случае асинхронного запроса к серверу, виджет можно заблокировать:</p>
+            <div id="demo4" class="col-md-5"></div>
+        </div>
+        <div class="col-md-5">
+<pre>
+w.on('vote', function(e) {
+    //...
+    w.lock();
+    w.update();
+
+    setTimeout(function() { // Здесь может быть AJAX запрос к серверу
+        //...
+
+        w.unlock();
+        w.update();
+    }, 1000);
+});
+</pre>
+        </div>
+    </div>
+
+
+</div>
+
+</body>
+
 </html>

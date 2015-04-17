@@ -1,0 +1,21 @@
+{
+  "name": "sw-rating",
+  "description": "Simple rating widget",
+  "version": "0.0.0",
+  "authors": [
+    "Nodlik <nndlik@gmail.com>"
+  ],
+  "main": "/build/rating.standalone.js",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "packages/js",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "handlebars.js": "~3.0.1"
+  }
+}

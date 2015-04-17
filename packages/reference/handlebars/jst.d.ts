@@ -1,0 +1,1 @@
+declare var JST: {[name: string]: (data: Object) => string};

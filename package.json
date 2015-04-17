@@ -1,0 +1,24 @@
+{
+  "name": "sw-rating",
+  "version": "0.0.0",
+  "devDependencies": {
+    "typescript": "latest"
+  },
+  "dependencies": {
+    "grunt-contrib-clean": "latest",
+    "grunt": "latest",
+    "grunt-contrib-uglify": "latest",
+    "grunt-contrib-watch": "latest",
+    "grunt-contrib-copy": "latest",
+    "grunt-typescript": "latest",
+    "grunt-contrib-less": "latest",
+    "grunt-contrib-handlebars": "latest",
+    "grunt-ts": "latest",
+    "typescript": "1.4.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

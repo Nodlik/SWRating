@@ -16,6 +16,9 @@ module SW {
         private config: Config = new Config();
         private stars: Star[] = [];
 
+        private markPlace: HTMLElement;
+        private voteNumberPlace: HTMLElement;
+
         private classes: RatingCSSClasses = {
             ratingBlock: 'w-rating',
             ratingBlockStretch: 'w-rating_fit',
@@ -39,8 +42,22 @@ module SW {
             if (this.needRender) {
                 return this.render();
             }
+            this.clearAllStar();
 
-            //...
+            if (this.mark > 0) {
+                var m = this.mark | 0;
+                for (var i = 0; i < m; i++) {
+                    this.stars[i].setValue(100);
+                }
+
+                if (m < this.stars.length) {
+                    this.stars[m].setValue((this.mark - m) * 100);
+                }
+
+                this.markPlace.innerText = parseFloat(this.mark.toFixed(2)).toString();
+                this.voteNumberPlace.style.display = 'block';
+                this.voteNumberPlace.innerText = this.voteCount.toString();
+            }
         }
 
         render() {
@@ -59,6 +76,38 @@ module SW {
             this.update();
         }
 
+        setMark(mark: number) {
+            this.mark = mark;
+        }
+
+        getMark() {
+            return this.mark;
+        }
+
+        setVoteCount(voteNumber: number) {
+            this.voteCount = voteNumber;
+        }
+
+        getVoteCount() {
+            return this.voteCount;
+        }
+
+        lock() {
+            this.setConfig({isLocked: true});
+        }
+
+        unlock() {
+            this.setConfig({isLocked: false});
+        }
+
+        getIsLocked() {
+            return this.config.get().isLocked;
+        }
+
+        getStars(): Star[] {
+            return this.stars;
+        }
+
         clear() {
             for (var i = 0; i < this.stars.length; i++) {
                 this.stars[i].destroy();
@@ -66,6 +115,15 @@ module SW {
 
             this.stars = [];
             this.el.innerHTML = '';
+
+            this.markPlace = null;
+            this.voteNumberPlace = null;
+        }
+
+        private clearAllStar() {
+            this.stars.forEach((s) => {
+                s.setValue(0);
+            });
         }
 
         private initDOM() {
@@ -78,6 +136,48 @@ module SW {
                     new Star(<HTMLElement>stars[i])
                 );
             }
+
+            this.markPlace = <HTMLElement>this.el.querySelectorAll('.' + this.classes.mark)[0];
+            this.voteNumberPlace = <HTMLElement>this.el.querySelectorAll('.' + this.classes.voteCount)[0];
+
+            this.initEvents();
+        }
+
+        private initEvents() {
+            var self = this;
+            var starClick = function() {
+                self.trigger('vote', parseInt((<HTMLElement>this).dataset['value']));
+            };
+
+            var leaveTimeout = 0;
+            var mouseEnter = (e: MouseEvent) => {
+                clearTimeout(leaveTimeout);
+
+                var idx = parseInt((<HTMLElement>e.target).dataset['value']);
+                for (var i = 0; i < this.stars.length; i++) {
+                    if (i <= idx) {
+                        this.stars[i].select();
+                    }
+                    else {
+                        this.stars[i].unSelect();
+                    }
+                }
+            };
+
+            var mouseLeave = () => {
+                clearTimeout(leaveTimeout);
+
+                leaveTimeout = setTimeout(() => {
+                    for (var i = 0; i < this.stars.length; i++) {
+                        this.stars[i].reset();
+                    }
+                }, 200);
+            };
+
+
+            this.stars.forEach((s) => {
+                s.setEvents(starClick, mouseEnter, mouseLeave);
+            });
         }
 
         private init() {

@@ -150,7 +150,19 @@ var SW;
             if (this.needRender) {
                 return this.render();
             }
-            //...
+            this.clearAllStar();
+            if (this.mark > 0) {
+                var m = this.mark | 0;
+                for (var i = 0; i < m; i++) {
+                    this.stars[i].setValue(100);
+                }
+                if (m < this.stars.length) {
+                    this.stars[m].setValue((this.mark - m) * 100);
+                }
+                this.markPlace.innerText = parseFloat(this.mark.toFixed(2)).toString();
+                this.voteNumberPlace.style.display = 'block';
+                this.voteNumberPlace.innerText = this.voteCount.toString();
+            }
         };
         Rating.prototype.render = function () {
             this.el.classList.remove(this.classes.ratingBlockStretch);
@@ -163,12 +175,43 @@ var SW;
             this.needRender = false;
             this.update();
         };
+        Rating.prototype.setMark = function (mark) {
+            this.mark = mark;
+        };
+        Rating.prototype.getMark = function () {
+            return this.mark;
+        };
+        Rating.prototype.setVoteCount = function (voteNumber) {
+            this.voteCount = voteNumber;
+        };
+        Rating.prototype.getVoteCount = function () {
+            return this.voteCount;
+        };
+        Rating.prototype.lock = function () {
+            this.setConfig({ isLocked: true });
+        };
+        Rating.prototype.unlock = function () {
+            this.setConfig({ isLocked: false });
+        };
+        Rating.prototype.getIsLocked = function () {
+            return this.config.get().isLocked;
+        };
+        Rating.prototype.getStars = function () {
+            return this.stars;
+        };
         Rating.prototype.clear = function () {
             for (var i = 0; i < this.stars.length; i++) {
                 this.stars[i].destroy();
             }
             this.stars = [];
             this.el.innerHTML = '';
+            this.markPlace = null;
+            this.voteNumberPlace = null;
+        };
+        Rating.prototype.clearAllStar = function () {
+            this.stars.forEach(function (s) {
+                s.setValue(0);
+            });
         };
         Rating.prototype.initDOM = function () {
             this.stars = [];
@@ -176,6 +219,40 @@ var SW;
             for (var i = 0; i < stars.length; i++) {
                 this.stars.push(new SW.Star(stars[i]));
             }
+            this.markPlace = this.el.querySelectorAll('.' + this.classes.mark)[0];
+            this.voteNumberPlace = this.el.querySelectorAll('.' + this.classes.voteCount)[0];
+            this.initEvents();
+        };
+        Rating.prototype.initEvents = function () {
+            var _this = this;
+            var self = this;
+            var starClick = function () {
+                self.trigger('vote', parseInt(this.dataset['value']));
+            };
+            var leaveTimeout = 0;
+            var mouseEnter = function (e) {
+                clearTimeout(leaveTimeout);
+                var idx = parseInt(e.target.dataset['value']);
+                for (var i = 0; i < _this.stars.length; i++) {
+                    if (i <= idx) {
+                        _this.stars[i].select();
+                    }
+                    else {
+                        _this.stars[i].unSelect();
+                    }
+                }
+            };
+            var mouseLeave = function () {
+                clearTimeout(leaveTimeout);
+                leaveTimeout = setTimeout(function () {
+                    for (var i = 0; i < _this.stars.length; i++) {
+                        _this.stars[i].reset();
+                    }
+                }, 200);
+            };
+            this.stars.forEach(function (s) {
+                s.setEvents(starClick, mouseEnter, mouseLeave);
+            });
         };
         Rating.prototype.init = function () {
             this.el.classList.add(this.classes.ratingBlock);

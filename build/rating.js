@@ -63,8 +63,56 @@ var SW;
     })();
     SW.Config = Config;
 })(SW || (SW = {}));
+var SW;
+(function (SW) {
+    var Star = (function () {
+        function Star(el) {
+            this.el = el;
+            this.value = 0;
+            this.clip = this.el.querySelectorAll('.w-star__clip-rect')[0];
+        }
+        Star.prototype.setEvents = function (onClick, onEnter, onLeave) {
+            if (!this.el.classList.contains('w-star_locked')) {
+                this.starClick = onClick;
+                this.mouseEnter = onEnter;
+                this.mouseLeave = onLeave;
+                this.el.addEventListener('click', onClick);
+                this.el.addEventListener('mouseenter', onEnter);
+                this.el.addEventListener('mouseleave', onLeave);
+            }
+        };
+        Star.prototype.select = function () {
+            this.moveClip(100);
+        };
+        Star.prototype.unSelect = function () {
+            this.moveClip(0);
+        };
+        Star.prototype.reset = function () {
+            this.moveClip(this.value);
+        };
+        /**
+         * @param value 0 - 100
+         */
+        Star.prototype.setValue = function (value) {
+            this.value = value;
+            this.moveClip(value);
+        };
+        Star.prototype.destroy = function () {
+            this.el.removeEventListener('click', this.starClick);
+            this.el.removeEventListener('mouseenter', this.mouseEnter);
+            this.el.removeEventListener('mouseleave', this.mouseLeave);
+        };
+        Star.prototype.moveClip = function (value) {
+            this.clip.style['-webkit-transform'] = 'scaleX(' + value + ')';
+            this.clip.style['transform'] = 'scaleX(' + value + ')';
+        };
+        return Star;
+    })();
+    SW.Star = Star;
+})(SW || (SW = {}));
 /// <reference path="EventWidget.ts"/>
 /// <reference path="Config"/>
+/// <reference path="Star.ts"/>
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -84,6 +132,14 @@ var SW;
             this.voteCount = voteCount;
             this.needRender = false;
             this.config = new SW.Config();
+            this.stars = [];
+            this.classes = {
+                ratingBlock: 'w-rating',
+                ratingBlockStretch: 'w-rating_fit',
+                star: 'w-rating__star',
+                mark: 'w-rating__mark',
+                voteCount: 'w-rating__vote-count'
+            };
             this.init();
         }
         Rating.prototype.setConfig = function (config) {
@@ -97,11 +153,38 @@ var SW;
             //...
         };
         Rating.prototype.render = function () {
-            // render template
+            this.el.classList.remove(this.classes.ratingBlockStretch);
+            if (this.config.get().stretch) {
+                this.el.classList.add(this.classes.ratingBlockStretch);
+            }
+            this.clear();
+            this.el.innerHTML = JST['rating.' + this.config.get().starType + '.html.hbs'](this.config.get());
+            this.initDOM();
+            this.needRender = false;
             this.update();
         };
+        Rating.prototype.clear = function () {
+            for (var i = 0; i < this.stars.length; i++) {
+                this.stars[i].destroy();
+            }
+            this.stars = [];
+            this.el.innerHTML = '';
+        };
+        Rating.prototype.initDOM = function () {
+            this.stars = [];
+            var stars = this.el.querySelectorAll('.' + this.classes.star);
+            for (var i = 0; i < stars.length; i++) {
+                this.stars.push(new SW.Star(stars[i]));
+            }
+        };
         Rating.prototype.init = function () {
-            console.log('widget init');
+            this.el.classList.add(this.classes.ratingBlock);
+            Handlebars.registerHelper('times', function (n, block) {
+                var accum = '';
+                for (var i = 0; i < n; ++i)
+                    accum += block.fn(i);
+                return accum;
+            });
         };
         return Rating;
     })(SW.EventWidget);

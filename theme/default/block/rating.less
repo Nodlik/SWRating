@@ -1,0 +1,62 @@
+@import "../config/config";
+@import "../lib/mixin";
+
+.w-rating {
+  .flex(flex-start);
+
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &_fit {
+    .flex-justify-content();
+
+    .w-rating__stars {
+      .flex-justify-content();
+
+      .w-rating__star {
+        .flex-grow(1);
+      }
+    }
+  }
+}
+
+.w-rating__stars {
+  .flex(flex-start);
+  .flex-grow(1);
+}
+
+.w-rating__result {
+  .flex-grow(0);
+  .flex-shrink(0);
+
+  min-width: 50px;
+  padding-left: 10px;
+  box-sizing: border-box;
+}
+
+.w-rating__mark {
+  font-size: 100%;
+  color: @fontColor;
+  text-align: right;
+}
+
+.w-rating__vote-count {
+  display: none;
+  font-size: 80%;
+  text-align: right;
+  color: @fontColor;
+
+  &:before {
+    content: "by ";
+  }
+}
+
+.w-rating__svg-defs {
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
+}

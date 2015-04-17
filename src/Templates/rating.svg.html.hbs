@@ -1,0 +1,33 @@
+<svg viewBox="0 0 198 198" class="w-rating__svg-defs">
+    <defs>
+        <linearGradient id="UnActiveGradient" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="100%">
+            <stop offset="0" style="stop-color: #FFFFFF"/>
+            <stop offset="1" style="stop-color: #000000"/>
+        </linearGradient>
+
+        <linearGradient id="ActiveGradient" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="100%">
+            <stop offset="0" style="stop-color: #ffe900"/>
+            <stop offset="1" style="stop-color: #ff7100"/>
+        </linearGradient>
+    </defs>
+</svg>
+
+<div class="w-rating__stars">
+    {{#times pointNumber}}
+        <div data-value="{{this}}" class="w-star w-star_type-svg w-rating__star {{#if ../isLocked}}w-star_locked{{/if}}"  {{#if ../stretch}}{{else}}style="width: {{../../starSize}}px"{{/if}}>
+            <svg viewBox="0 0 198 198" shape-rendering="geometricPrecision">
+                <clipPath id="clip{{ this }}">
+                    <rect class="w-star__clip-rect" x="0" y="0" width="1%" height="100%" />
+                </clipPath>
+
+                <polygon fill="url(#UnActiveGradient)" points="100,10 40,198 190,78 10,78 160,198" />
+                <polygon fill="url(#ActiveGradient)" clip-path="url(#clip{{ this }})" points="100,10 40,198 190,78 10,78 160,198" />
+            </svg>
+        </div>
+    {{/times}}
+</div>
+
+<div class="w-rating__result">
+    <div class="w-rating__mark"></div>
+    <div class="w-rating__vote-count"></div>
+</div>
